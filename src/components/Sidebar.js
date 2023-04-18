@@ -24,6 +24,7 @@ const Sidebar = props => {
     }
     function handleAdd(e){
         e.preventDefault()
+        if (e.target.elements.category.value=='');
       
         setMenu(
             produce((draft)=>{
@@ -59,6 +60,7 @@ const Sidebar = props => {
             return <Form className='mt-5' onSubmit={handleAdd}>
         <Form.Group className="mb-3" controlId="newCategory">
         <Form.Control type="text" name='category' placeholder="New category" 
+        required
         />
         <Form.Text className="text-muted">
         </Form.Text>

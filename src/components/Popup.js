@@ -25,9 +25,9 @@ const downloadFile = ({ data, fileName, fileType },restaurant) => {
 }
 
 
-const exportToJson = (e,data,restaurant) => {
+const exportToJson = (e,data,restaurant,image) => {
   e.preventDefault()
-  let whole = {restaurant}
+  let whole = {restaurant,image}
   whole['menu'] = data
   console.log(whole)
   downloadFile({
@@ -39,7 +39,7 @@ const exportToJson = (e,data,restaurant) => {
 
 
 function Popup(props) {
-  const {text,show,setShow,menu,setMenu,restaurant} = props
+  const {text,show,setShow,menu,setMenu,restaurant,image} = props
   const [selectedFile, setSelectedFile] = useState(null);
   const handleClose = () => setShow(false);
   let message = ''
@@ -55,7 +55,7 @@ function Popup(props) {
       <div className='file-form'>
       <Form onSubmit={readFile}>
       <Form.Group controlId="formFile" className="mb-3">
-        <Form.Control name='path' type="file" accept='.json'
+        <Form.Control name='path' required type="file" accept='.json'
         onChange={(e) => setSelectedFile(e.target.files[0])}
         />
       </Form.Group>
@@ -68,7 +68,7 @@ function Popup(props) {
     }
     return (
       <div className='file-form'>
-      <Button className='m-5' variant="info" onClick={(e)=>exportToJson(e,menu,restaurant)}>
+      <Button className='m-5' variant="info" onClick={(e)=>exportToJson(e,menu,restaurant,image)}>
             Download
       </Button>
       </div>

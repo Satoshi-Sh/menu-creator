@@ -20,6 +20,11 @@ function Header(props) {
     const [text, setText] = useState('');
     const handleShow = () => setShow(true);
 
+    function setMenu_(obj){
+      console.trace()
+      setMenu(obj)
+    }
+
     function fileUpload(e){
         setText(e.target.innerText)
         handleShow()
@@ -41,11 +46,11 @@ function Header(props) {
         </Container>
         
       </Navbar>
-      <Popup menu={menu} setMenu={setMenu} restaurant={json.restaurant} text={text} show={show} setShow = {setShow} />
+      <Popup menu={menu} setMenu={setMenu_} restaurant={json.restaurant} image={json.image} text={text} show={show} setShow = {setShow} />
       <div className='main'>
         
-        <Sidebar setMenu = {setMenu} menu={menu}/>
-        <Menu setMenu = {setMenu} image={json['image']} menu={menu}/> 
+        <Sidebar setMenu = {setMenu_} menu={menu}/>
+        <Menu setMenu = {setMenu_} image={json['image']} menu={menu}/> 
     </div>
     </>
   );

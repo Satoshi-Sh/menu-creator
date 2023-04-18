@@ -14,9 +14,7 @@ function PopupOption(props) {
   const [show, setShow] = useState(false);
   const dragItem = useRef()
   const dragOverItem = useRef()
-  useEffect(() => {
-    console.log(menu);
-}, [menu])
+  
 
   const dragStart = (e, position) => {
     dragItem.current = position;
@@ -34,7 +32,7 @@ function PopupOption(props) {
              draft[index].items[index2].groups[index3].options.splice(dragOverItem.current,0,dragItemContent)
              dragItem.current = null;
              dragOverItem.current = null;
-             console.log(JSON.parse(JSON.stringify(draft)))
+             
          }))
        
   }
