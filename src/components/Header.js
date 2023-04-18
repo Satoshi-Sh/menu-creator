@@ -6,6 +6,7 @@ import './Header.css'
 import Popup from './Popup'
 import Sidebar from './Sidebar.js'
 import Menu from './Menu.js'
+import { Link } from "react-router-dom";
 
 import sushiya from '../menus/sushiya.json'
 
@@ -42,6 +43,7 @@ function Header(props) {
           <div>
           <Button variant="outline-primary" onClick={fileUpload}>Upload</Button>{' '}
           <Button variant="outline-success" onClick={fileDownload}>Download</Button>{' '}
+          <Link to='/livepage'><Button variant="outline-warning">Live Page</Button>{' '}</Link>
           </div>
         </Container>
         
