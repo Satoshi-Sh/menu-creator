@@ -16,8 +16,8 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route exact path='/' element={<Header />} />
-      <Route path='/livepage' element={<Live />} />
+      <Route exact path='/' element={<Header menu={menu} setMenu={setMenu} json={json}/>} />
+      <Route path='/livepage' element={<Live menu={menu} json={json}/>} />
       </Routes>   
     </Router>
     );

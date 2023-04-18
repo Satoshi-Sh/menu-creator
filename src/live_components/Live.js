@@ -1,11 +1,17 @@
 import './Live.css';
 import React, {useState} from 'react'
 import Header from './Header'
-function Live() {
+import Sidebar from './Sidebar'
+import Menu from './Menu'
+function Live(props) {
+  const {menu,json} = props
+  
   return (
     <>
      <Header />
-     <h1>Hello</h1>
+     <Sidebar menu={menu} />
+     <Menu menu={menu} image={json['image']}/>
+     
     </>
     );
 }

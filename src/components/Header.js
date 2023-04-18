@@ -8,15 +8,10 @@ import Sidebar from './Sidebar.js'
 import Menu from './Menu.js'
 import { Link } from "react-router-dom";
 
-import sushiya from '../menus/sushiya.json'
-
-// sample menu 
-const loadedData = JSON.stringify(sushiya)
-const json = JSON.parse(loadedData)
 
 
 function Header(props) {
-    const [menu,setMenu] = useState(json['menu'])
+    const {menu,setMenu,json} = props
     const [show, setShow] = useState(false);
     const [text, setText] = useState('');
     const handleShow = () => setShow(true);
