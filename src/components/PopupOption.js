@@ -3,8 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import produce from "immer"
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import InputGroup from 'react-bootstrap/InputGroup';
 import './Popup.css'
 
@@ -16,6 +14,9 @@ function PopupOption(props) {
   const [show, setShow] = useState(false);
   const dragItem = useRef()
   const dragOverItem = useRef()
+  useEffect(() => {
+    console.log(menu);
+}, [menu])
 
   const dragStart = (e, position) => {
     dragItem.current = position;
@@ -26,14 +27,16 @@ function PopupOption(props) {
     dragOverItem.current= position;
   }
 
-  const drop = ()=>{
-        setMenu(produce((draft)=>{
+  const drop = (e)=>{
+      e.stopPropagation()
+      setMenu(produce((draft)=>{
              const dragItemContent = draft[index].items[index2].groups[index3].options.splice(dragItem.current,1)[0]
              draft[index].items[index2].groups[index3].options.splice(dragOverItem.current,0,dragItemContent)
              dragItem.current = null;
              dragOverItem.current = null;
-             console.info(JSON.parse(JSON.stringify(draft[index].items[index2].groups[index3].options)))
+             console.log(JSON.parse(JSON.stringify(draft)))
          }))
+       
   }
 
 
