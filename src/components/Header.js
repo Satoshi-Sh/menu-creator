@@ -38,7 +38,7 @@ function Header(props) {
     <>
       <Navbar sticky='top' bg="dark" variant="dark" expand='lg'>
         <Container>
-          <Navbar.Brand href="#home">{json.restaurant}</Navbar.Brand>
+          <Navbar.Brand href="#top">{json.restaurant}</Navbar.Brand>
           <div>
           <Button variant="outline-primary" onClick={fileUpload}>Upload</Button>{' '}
           <Button variant="outline-success" onClick={fileDownload}>Download</Button>{' '}

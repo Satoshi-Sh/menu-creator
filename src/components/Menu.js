@@ -12,7 +12,7 @@ const Menu = props => {
     }
     return (
         <div className='menu'>
-            <h1 className='header'>Menu</h1>
+            <h1 id='top' className='header'>Menu</h1>
             <ImagePart image={image} />
             {categories && categories.map((category,index)=>(
                 <Category image={image} key={index} category={category} index={index} menu={menu} setMenu={setMenu}/>
