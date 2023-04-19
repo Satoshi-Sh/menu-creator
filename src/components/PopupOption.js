@@ -1,4 +1,5 @@
 import React, { useState,useEffect, useRef } from 'react';
+import { flushSync } from 'react-dom'; 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -17,24 +18,29 @@ function PopupOption(props) {
   
 
   const dragStart = (e, position) => {
+    e.stopPropagation();
     dragItem.current = position;
   };
 
 
   const dragEnter = (e,position) => {
+    e.stopPropagation();
     dragOverItem.current= position;
   }
 
   const drop = (e)=>{
       e.stopPropagation()
-      setMenu(produce((draft)=>{
-             const dragItemContent = draft[index].items[index2].groups[index3].options.splice(dragItem.current,1)[0]
-             draft[index].items[index2].groups[index3].options.splice(dragOverItem.current,0,dragItemContent)
-             dragItem.current = null;
-             dragOverItem.current = null;
-             
-         }))
-       
+      const [startIdx, endIdx] = [dragItem.current, dragOverItem.current];
+      setMenu(
+        produce((draft) => {
+          console.log("in draft", startIdx, endIdx);
+          console.log("in draft (read before)", startIdx, endIdx);
+          const arr = draft[index].items[index2].groups[index3].options;
+          const [start, end] = [arr[startIdx], arr[endIdx]];
+          arr[endIdx] = start;
+          arr[startIdx] = end;
+        })
+      )
   }
 
 
