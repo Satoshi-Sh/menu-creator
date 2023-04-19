@@ -71,7 +71,7 @@ function PopupOption(props) {
   } else {
     setMenu(
       produce((draft)=>{
-      draft[index].items[index2].groups[index3].options[i]['price']= e.target.value
+      draft[index].items[index2].groups[index3].options[i]['price']= parseFloat(e.target.value)
       }))
       
   }
