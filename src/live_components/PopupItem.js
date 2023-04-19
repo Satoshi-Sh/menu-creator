@@ -12,18 +12,20 @@ function PopupItem(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [price,setPrice] = useState(0)
 
 
   const Check = (props) =>{
-    const {options} = props
+    const {options,index,type} = props
     return (
-    <>
-    {options && options.map((option,index)=> {
+    <div key={index} className='mt-3'>
+    {options && options.map((option,i)=> {
+      console.log(typeof option.price)
+      let price = option.price==0? '': ` - Add \$${option.price}`
        return( 
-      <div class="form-check mb-3">
-        <input type="radio" class="form-check-input" id="validationFormCheck3" name={`radio${index}`} required></input>
-        <label class="form-check-label" for="validationFormCheck">{option.name}</label>
-        <div class="invalid-feedback">Example invalid feedback text</div>
+      <div className="form-check mb-3" key={i}>
+        <input type={type} className="form-check-input" id="validationFormCheck3" name={`${type}${index}`} required></input>
+        <label className="form-check-label">{option.name} {price}</label>
       </div>
 
        )
@@ -37,7 +39,7 @@ function PopupItem(props) {
   
     }
     )}
-    </>
+    </div>
     )
   }
 
@@ -80,10 +82,11 @@ function PopupItem(props) {
         <Modal.Body>
 
           {item.groups && item.groups.map((group,index)=>{
+          const type = group.required? 'radio':'checkbox';
           return (
           <div key={index}>  
           <Modal.Header>{group.name}</Modal.Header>
-          <Check options={group.options} />
+          <Check type={type} index= {index} options={group.options} />
           </div>
           )
           })}
@@ -91,7 +94,7 @@ function PopupItem(props) {
           <Form onSubmit={handleSubmit}>
            
             <Form.Group
-              className="m-3"
+              className="m-5"
               controlId="exampleForm.ControlTextarea1"
             >
             <Form.Control name='request' as="textarea" rows={2} placeholder="Add special instructions for the restaurant."
@@ -101,8 +104,8 @@ function PopupItem(props) {
           </Form>
         </Modal.Body>
         <div className='bottom-card'>
-        <Button variant="outline-secondary" className='m-3'>
-               Add 
+        <Button variant="outline-secondary" className='mb-5'>
+               Add to Cart
         </Button>
         </div>
       </Modal>
