@@ -15,24 +15,25 @@ function ItemCard(props) {
 
   const drop = (e) => {
     e.stopPropagation();
-    setMenu(
-      produce(draft=>{
-        const dragItemContent = draft[index].items[index2].groups.splice(dragItem.current,1)[0]
-        console.log(JSON.parse(JSON.stringify(dragItemContent)))
-        draft[index].items[index2].groups.splice(dragOverItem.current,0,dragItemContent)
-        dragItem.current= null;
-        dragOverItem.current= null;
-        
-      })
-    ) 
+        const [startIdx,endIdx] = [dragItem.current,dragOverItem.current]
+        setMenu(
+          produce((draft)=>{
+            const arr = draft[index].items[index2].groups
+            const [start,end] = [arr[startIdx],arr[endIdx]]
+            arr[endIdx]=start
+            arr[startIdx] = end
+          })
+        )
   };
 
   
   const dragStart = (e, position) => {
+    e.stopPropagation()
     dragItem.current = position;
   };
  
   const dragEnter = (e, position) => {
+    e.stopPropagation()
     dragOverItem.current = position;
   };
 
