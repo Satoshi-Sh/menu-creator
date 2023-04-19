@@ -1,5 +1,5 @@
 import './App.css';
-import Header from './components/Header.js'
+import Main from './components/Main.js'
 import sushiya from './menus/sushiya.json'
 import React, {useState} from 'react'
 import Live from './live_components/Live'
@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route exact path='/' element={<Header menu={menu} setMenu={setMenu} restaurant={restaurant} setRestaurant={setRestaurant}
+      <Route exact path='/' element={<Main menu={menu} setMenu={setMenu} restaurant={restaurant} setRestaurant={setRestaurant}
        image={image} setImage={setImage} />}/>
       <Route path='/livepage' element={<Live menu={menu} restaurant={restaurant} image={image}/>} />
       </Routes>   
