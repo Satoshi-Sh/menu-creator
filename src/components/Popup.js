@@ -39,7 +39,7 @@ const exportToJson = (e,data,restaurant,image) => {
 
 
 function Popup(props) {
-  const {text,show,setShow,menu,setMenu,restaurant,image} = props
+  const {text,show,setShow,menu,setMenu,restaurant,setRestaurant,image,setImage} = props
   const [selectedFile, setSelectedFile] = useState(null);
   const handleClose = () => setShow(false);
   let message = ''
@@ -81,7 +81,10 @@ function Popup(props) {
     fileReader.readAsText(selectedFile,"UTF-8")
     fileReader.onload = e => {
     const content = e.target.result;
-    setMenu(JSON.parse(content)['menu']);
+    const data = JSON.parse(content)
+    setMenu(data['menu']);
+    setRestaurant(data['restaurant'])
+    setImage(data['image'])
     handleClose()
   }
 }

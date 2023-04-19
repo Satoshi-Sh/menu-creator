@@ -13,11 +13,14 @@ const json = JSON.parse(loadedData)
 
 function App() {
   const [menu,setMenu] = useState(json['menu'])
+  const [restaurant,setRestaurant] =useState(json['restaurant'])
+  const [image,setImage] = useState(json['image'])
   return (
     <Router>
       <Routes>
-      <Route exact path='/' element={<Header menu={menu} setMenu={setMenu} json={json}/>} />
-      <Route path='/livepage' element={<Live menu={menu} json={json}/>} />
+      <Route exact path='/' element={<Header menu={menu} setMenu={setMenu} restaurant={restaurant} setRestaurant={setRestaurant}
+       image={image} setImage={setImage} />}/>
+      <Route path='/livepage' element={<Live menu={menu} restaurant={restaurant} image={image}/>} />
       </Routes>   
     </Router>
     );

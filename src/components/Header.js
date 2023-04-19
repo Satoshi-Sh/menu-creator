@@ -11,15 +11,11 @@ import { Link } from "react-router-dom";
 
 
 function Header(props) {
-    const {menu,setMenu,json} = props
+    const {menu,setMenu,image,setImage,restaurant,setRestaurant} = props
     const [show, setShow] = useState(false);
     const [text, setText] = useState('');
     const handleShow = () => setShow(true);
 
-    function setMenu_(obj){
-      console.trace()
-      setMenu(obj)
-    }
 
     function fileUpload(e){
         setText(e.target.innerText)
@@ -34,7 +30,7 @@ function Header(props) {
     <>
       <Navbar sticky='top' bg="dark" variant="dark" expand='lg'>
         <Container>
-          <Navbar.Brand href="#top">{json.restaurant}</Navbar.Brand>
+          <Navbar.Brand href="#top">{restaurant}</Navbar.Brand>
           <div>
           <Button variant="outline-primary" onClick={fileUpload}>Upload</Button>{' '}
           <Button variant="outline-success" onClick={fileDownload}>Download</Button>{' '}
@@ -43,11 +39,11 @@ function Header(props) {
         </Container>
         
       </Navbar>
-      <Popup menu={menu} setMenu={setMenu_} restaurant={json.restaurant} image={json.image} text={text} show={show} setShow = {setShow} />
+      <Popup menu={menu} setMenu={setMenu} restaurant={restaurant} setRestaurant={setRestaurant} image={image} setImage={setImage} text={text} show={show} setShow = {setShow} />
       <div className='main'>
         
-        <Sidebar setMenu = {setMenu_} menu={menu}/>
-        <Menu setMenu = {setMenu_} image={json['image']} menu={menu}/> 
+        <Sidebar setMenu = {setMenu} menu={menu}/>
+        <Menu setMenu = {setMenu} image={image} menu={menu}/> 
     </div>
     </>
   );

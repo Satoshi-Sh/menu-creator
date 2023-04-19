@@ -20,8 +20,7 @@ function PopupItem(props) {
     return (
     <div key={index} className='mt-3'>
     {options && options.map((option,i)=> {
-      console.log(typeof option.price)
-      let price = option.price==0? '': ` - Add \$${option.price}`
+      let price = option.price==0? '': ` - Add \$${option.price.toFixed(2)}`
        return( 
       <div className="form-check mb-3" key={i}>
         <input type={type} className="form-check-input" id="validationFormCheck3" name={`${type}${index}`} required></input>

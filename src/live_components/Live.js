@@ -4,13 +4,13 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 import Menu from './Menu'
 function Live(props) {
-  const {menu,json} = props
+  const {menu,image,restaurant} = props
   
   return (
     <>
-     <Header />
-     <Sidebar menu={menu} />
-     <Menu menu={menu} image={json['image']}/>
+     <Header restaurant={restaurant}/>
+     <Sidebar menu={menu}  />
+     <Menu menu={menu} image={image}/>
      
     </>
     );

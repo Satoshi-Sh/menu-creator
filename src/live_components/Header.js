@@ -6,19 +6,15 @@ import './Header.css'
 
 import { Link } from "react-router-dom";
 
-import sushiya from '../menus/sushiya.json'
-
-// sample menu 
-const loadedData = JSON.stringify(sushiya)
-const json = JSON.parse(loadedData)
 
 
 function Header(props) {
-   return (
+  const {restaurant} = props 
+  return (
     <>
       <Navbar sticky='top' bg="dark" variant="dark" expand='lg'>
         <Container>
-          <Navbar.Brand href="#top">Sushiya</Navbar.Brand>
+          <Navbar.Brand href="#top">{restaurant}</Navbar.Brand>
           <div>
           <Link to='/'>
           <Button variant="outline-primary">
