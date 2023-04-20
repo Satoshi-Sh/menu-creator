@@ -5,3 +5,35 @@
     padding:10px;
     line-height: normal;
 }
+
+
+.quantities{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+    width:100%;
+    height:auto;
+
+}
+
+.buttons {
+    margin:20px;
+    padding:5px;
+    border:solid 0.2px grey;
+    border-radius:20px;
+    width:200px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly
+
+}
+.buttons button{
+    width:25px;
+    height:25px;
+    background-color: white;
+    border: solid 0.2px grey;
+    border-radius:50%;
+    padding: 0px;
+}
+

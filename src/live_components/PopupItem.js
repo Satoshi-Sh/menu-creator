@@ -12,7 +12,16 @@ function PopupItem(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [price,setPrice] = useState(0)
+
+  // default itemOrder
+  const empty = {
+    options:[],
+    request:'',
+    quantities:0,
+    price: item.price
+  }
+  const [itemOrder,setItemOrder] = useState(empty)
+  const [quantities,setQuantities] = useState(0)
 
 
   const Check = (props) =>{
@@ -22,47 +31,49 @@ function PopupItem(props) {
     {options && options.map((option,i)=> {
       let price = option.price==0? '': ` - Add \$${option.price.toFixed(2)}`
        return( 
-      <div className="form-check mb-3" key={i}>
-        <input type={type} className="form-check-input" id="validationFormCheck3" name={`${type}${index}`} required></input>
-        <label className="form-check-label">{option.name} {price}</label>
-      </div>
+      <Form.Check
+      value = {`${option.name}${price}`}
+      label={`${option.name}${price}`}
+      type={type}
+      name={`group${index}`}
+      id={`${type}-${i}`}
+      key ={i}/>
 
        )
-    //   <div key={`default-checkbox`} className="mb-3">
-    //       <Form.Check 
-    //         type='checkbox'
-    //         id={`default-checkbox`}
-    //         label={option.name}
-    //       />
-    // </div>
+ 
   
     }
     )}
     </div>
     )
   }
+  const increment = ()=>{
+    setItemOrder((prev)=>{
+      return {...prev,quantities:prev.quantities+1}
+    })
+  }
+  const decrement = () =>{
+    if (itemOrder.quantities==0) return;
+    setItemOrder((prev)=>{
+      return {...prev,quantities:prev.quantities-1}
+    })
 
-  const handleDelete = () => {
-    // setMenu(
-    //   produce((draft)=>{
-    //     draft[index].items.splice(index2,1)
-    //   })
-    // )
-    handleClose()
   }
 
-  const handleSubmit =(e) =>{
-    // update menu 
-    // setMenu(
-    //   produce((draft)=>{
-    //   draft[index].items[index2].name= e.target.elements.name.value
-    //   draft[index].items[index2].description = e.target.elements.description.value
-    //   draft[index].items[index2].price = Number(e.target.elements.price.value)
-    //   })
-    // )
+  const saveRequest = (e)=>{
+   console.log(e.target.value)
+  }
 
+
+
+  const handleSubmit =(e) =>{
+    const elements = e.target.elements
+    for (let element of elements){
+      if (element.checked){
+      console.log(element)}
+    }
+    const request = elements.request.value
     e.preventDefault()
-    handleClose()
   }
 
   return (
@@ -72,41 +83,48 @@ function PopupItem(props) {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{item.name}</Modal.Title>
+        <Modal.Header closeButton className='p-4'>
+          <Modal.Title >{item.name}</Modal.Title>
           <Modal.Title id='desc'>
           {item.description}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-
+        <Modal.Body className='p-5'>
+          <Form onSubmit={handleSubmit}>
           {item.groups && item.groups.map((group,index)=>{
           const type = group.required? 'radio':'checkbox';
+          const isRequired = group.required? ' (Required)' : ' (Optional)';
           return (
           <div key={index}>  
-          <Modal.Header>{group.name}</Modal.Header>
+          <Modal.Header>{group.name}{isRequired}</Modal.Header>
           <Check type={type} index= {index} options={group.options} />
           </div>
           )
-          })}
-
-          <Form onSubmit={handleSubmit}>
-           
+          })}           
             <Form.Group
               className="m-5"
               controlId="exampleForm.ControlTextarea1"
             >
-            <Form.Control name='request' as="textarea" rows={2} placeholder="Add special instructions for the restaurant."
-              />
+            <Form.Control name='request' as="textarea" rows={3} placeholder="Add special instructions for the restaurant."
+              onBlur={saveRequest} defaultValue={itemOrder.request}/>
+            
             </Form.Group>
+            <div className='quantities'>
+              <div className='buttons'>
+                  <button onClick={decrement}>-</button>
+                  <div>{itemOrder.quantities}</div>
+                  <button onClick={increment}>+</button>
+              </div>
+            </div>
+            <div className='bottom-card'>
+            <Button variant="outline-secondary" className='m-3' type='submit'>
+               Add to Cart {`\$${(itemOrder.price*itemOrder.quantities).toFixed(2)}`}
+        </Button>
+        </div>
         
           </Form>
         </Modal.Body>
-        <div className='bottom-card'>
-        <Button variant="outline-secondary" className='mb-5'>
-               Add to Cart
-        </Button>
-        </div>
+        
       </Modal>
     </>
   );

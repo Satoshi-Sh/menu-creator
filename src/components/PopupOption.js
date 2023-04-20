@@ -33,8 +33,6 @@ function PopupOption(props) {
       const [startIdx, endIdx] = [dragItem.current, dragOverItem.current];
       setMenu(
         produce((draft) => {
-          console.log("in draft", startIdx, endIdx);
-          console.log("in draft (read before)", startIdx, endIdx);
           const arr = draft[index].items[index2].groups[index3].options;
           const [start, end] = [arr[startIdx], arr[endIdx]];
           arr[endIdx] = start;

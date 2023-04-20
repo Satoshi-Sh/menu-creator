@@ -40,11 +40,6 @@ function Header(props) {
         
       </Navbar>
       <Popup menu={menu} setMenu={setMenu} restaurant={restaurant} setRestaurant={setRestaurant} image={image} setImage={setImage} text={text} show={show} setShow = {setShow} />
-      <div className='main'>
-        
-        <Sidebar setMenu = {setMenu} menu={menu}/>
-        <Menu setMenu = {setMenu} image={image} menu={menu}/> 
-    </div>
     </>
   );
 }
