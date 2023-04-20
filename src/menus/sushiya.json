@@ -120,7 +120,7 @@
           "groups": [
             {
               "name": "Add Sauce",
-              "required": true,
+              "required": false,
               "options": [
                 { "name": "Mayonaise", "price": 1 },
                 { "name": "Sriracha", "price": 1 }

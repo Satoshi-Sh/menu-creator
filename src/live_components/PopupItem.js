@@ -35,9 +35,11 @@ function PopupItem(props) {
     options:gps,
     request:'',
     quantities:0,
-    price: item.price
+    price: item.price,
+    optionPrice:0,
   }
   const [itemOrder,setItemOrder] = useState(empty)
+
 
   const increment = (e)=>{
     e.preventDefault()
@@ -62,10 +64,34 @@ function PopupItem(props) {
     )
   }
 
+  // for total of options
+  const calculate= (options) =>{
+    let total = 0
+    options.map((option,index)=>{
+      if ('radio' in option){
+        let price = parseFloat(option.radio.split('$').at(-1))? parseFloat(option.radio.split('$').at(-1)):0
+        total = total+price
+      }
+      else {
+        const options = item.groups[index].options
+        for (let i=0;i< option['check'].length;i++){
+          if(option['check'][i]){ 
+            total = total + options[i].price
+          }
+
+        }
+      }
+    })
+    return total
+  }
+
   const handleRadio= (e,index)=>{
+    
     setItemOrder(
       produce((draft)=>{
         draft.options[index]['radio']=e.target.value
+        let sub =calculate(draft.options)
+        draft.optionPrice=sub
       })
     )
   }
@@ -73,6 +99,8 @@ function PopupItem(props) {
     setItemOrder(
       produce((draft)=>{
         draft.options[index]['check'][index2]= !draft.options[index]['check'][index2]
+        let sub =calculate(draft.options)
+        draft.optionPrice=sub
       })
     )
     
@@ -179,7 +207,7 @@ function PopupItem(props) {
             </div>
             <div className='bottom-card'>
             <Button variant="outline-secondary" className='m-3' type='submit'>
-               Add to Cart {`\$${(itemOrder.price*itemOrder.quantities).toFixed(2)}`}
+               Add to Cart {`\$${((itemOrder.price+itemOrder.optionPrice)*itemOrder.quantities).toFixed(2)}`}
         </Button>
         </div>
         
