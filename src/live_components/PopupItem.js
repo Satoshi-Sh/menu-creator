@@ -12,20 +12,80 @@ function PopupItem(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  // options object for radio and checkbox
+  const gps=[]
+  if(item.groups){
+    for (let group of item.groups){
+      if (group.required){
+        gps.push({'radio':''})
+      }
+      else {
+        let boxes = []
+        for (let _ of group.options){
+        boxes.push(false)
+        }
+        gps.push({check:boxes})
+      }
+    }
+  }
 
   // default itemOrder
   const empty = {
-    options:[],
+    options:gps,
     request:'',
     quantities:0,
     price: item.price
   }
   const [itemOrder,setItemOrder] = useState(empty)
-  const [quantities,setQuantities] = useState(0)
+
+  const increment = (e)=>{
+    e.preventDefault()
+    setItemOrder((prev)=>{
+      return {...prev,quantities:prev.quantities+1}
+    })
+  }
+  const decrement = (e) =>{
+    e.preventDefault()
+    if (itemOrder.quantities==0) return;
+    setItemOrder((prev)=>{
+      return {...prev,quantities:prev.quantities-1}
+    })
+
+  }
+
+  const saveRequest = (e)=>{
+    setItemOrder(
+      produce((draft)=>{
+        draft['request']=e.target.value
+      })
+    )
+  }
+
+  const handleRadio= (e,index)=>{
+    setItemOrder(
+      produce((draft)=>{
+        draft.options[index]['radio']=e.target.value
+      })
+    )
+  }
+  const handleCheck = (e,index,index2)=>{
+    setItemOrder(
+      produce((draft)=>{
+        draft.options[index]['check'][index2]= !draft.options[index]['check'][index2]
+      })
+    )
+    
+  }
+  const handleSubmit =(e) =>{
+    console.log(itemOrder)
+    e.preventDefault()
+  }
 
 
   const Check = (props) =>{
     const {options,index,type} = props
+    if (type==='radio'){
     return (
     <div key={index} className='mt-3'>
     {options && options.map((option,i)=> {
@@ -37,44 +97,45 @@ function PopupItem(props) {
       type={type}
       name={`group${index}`}
       id={`${type}-${i}`}
-      key ={i}/>
+      key ={i}
+      checked={`${option.name}${price}`===itemOrder.options[index]['radio']}
+      onChange={(e)=>handleRadio(e,index)}
+      required
+      />
 
        )
- 
-  
     }
     )}
     </div>
-    )
-  }
-  const increment = ()=>{
-    setItemOrder((prev)=>{
-      return {...prev,quantities:prev.quantities+1}
-    })
-  }
-  const decrement = () =>{
-    if (itemOrder.quantities==0) return;
-    setItemOrder((prev)=>{
-      return {...prev,quantities:prev.quantities-1}
-    })
+    )}
+    // for checkboxes
+    else {
+      return (
+        <div key={index} className='mt-3'>
+        {options && options.map((option,i)=> {
+          let price = option.price==0? '': ` - Add \$${option.price.toFixed(2)}`
+           return( 
+          <Form.Check
+          value = {`${option.name}${price}`}
+          label={`${option.name}${price}`}
+          type={type}
+          name={`group${index}`}
+          id={`${type}-${i}`}
+          key ={i}
+          checked={itemOrder.options[index]['check'][i]}
+          onChange={(e)=>handleCheck(e,index,i)}
+          />
+    
+           )
+        }
+        )}
+        </div>
+        )}
+    
+      
 
-  }
-
-  const saveRequest = (e)=>{
-   console.log(e.target.value)
-  }
-
-
-
-  const handleSubmit =(e) =>{
-    const elements = e.target.elements
-    for (let element of elements){
-      if (element.checked){
-      console.log(element)}
     }
-    const request = elements.request.value
-    e.preventDefault()
-  }
+  
 
   return (
     <>
