@@ -121,7 +121,7 @@ function PopupItem(props) {
       draft.push({...itemOrder, name:item.name})
       }
     ))
-    
+    setShow(false)
   }
 
 
