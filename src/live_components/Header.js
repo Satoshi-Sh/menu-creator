@@ -4,8 +4,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import React, { useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import './Header.css'
+import produce from "immer"
 
 import { Link } from "react-router-dom";
+
 
 function OffCanvasExample(props) {
   const {cart,setCart} = props
@@ -20,6 +22,24 @@ function OffCanvasExample(props) {
   const complete = () =>{
     setCart([])
     setShow(false)
+  }
+  const increment =(e,index) =>{
+    setCart(produce((draft)=>{
+    draft[index]['quantities'] = draft[index]['quantities'] +1
+    })
+    )
+  }
+  const decrement = (e,index)=>{
+    setCart(produce((draft)=>{
+      if (draft[index]['quantities'] ===1)
+      {  
+        draft.splice(index,1)
+      }
+      else {
+        draft[index]['quantities'] = draft[index]['quantities'] -1
+      }
+    }
+    ))
   }
 
   const handleClose = () => {
@@ -41,7 +61,7 @@ function OffCanvasExample(props) {
           <h2 className='mt-4'>Subtotal ${total.toFixed(2)}</h2>
             <h2>Total ${(total*1.1).toFixed(2)}</h2>
           <Button className='mt-3' variant='outline-secondary' onClick={complete}>Place Order</Button>
-            <p className='mt-3'>*This delete items in the cart.</p> 
+            <p className='mt-3'>*This deletes items in the cart.</p> 
           </>
         )
       }
@@ -71,6 +91,12 @@ function OffCanvasExample(props) {
               {item.request&&<li>Special Request: {item.request}</li>}
               </ul>
               <h4>${((item.price+item.optionPrice)*item.quantities).toFixed(2)}</h4>
+              <div className='quantities'>
+              <div className='buttons'>
+                  <button onClick={(e)=>decrement(e,index)}>-</button>
+                  <button onClick={(e)=>increment(e,index)}>+</button>
+              </div>
+            </div>
               </div>
               )
           })}

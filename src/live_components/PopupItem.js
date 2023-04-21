@@ -115,7 +115,6 @@ function PopupItem(props) {
   }
   const handleSubmit =(e) =>{
     e.preventDefault()
-    console.log({...itemOrder, name:item.name})
     setCart(
       produce((draft)=>{
       draft.push({...itemOrder, name:item.name})
