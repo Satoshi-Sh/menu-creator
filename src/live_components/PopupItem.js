@@ -8,9 +8,11 @@ import './PopupItem.css'
 
 
 function PopupItem(props) {
-  const {index,index2,item,menu} = props 
+  const {index,index2,item,menu,setCart} = props 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setItemOrder(empty)
+    setShow(false)};
   const handleShow = () => setShow(true);
   
   // options object for radio and checkbox
@@ -34,6 +36,7 @@ function PopupItem(props) {
   const empty = {
     options:gps,
     request:'',
+    optionNames:[],
     quantities:0,
     price: item.price,
     optionPrice:0,
@@ -67,22 +70,25 @@ function PopupItem(props) {
   // for total of options
   const calculate= (options) =>{
     let total = 0
+    let names =[]
     options.map((option,index)=>{
       if ('radio' in option){
         let price = parseFloat(option.radio.split('$').at(-1))? parseFloat(option.radio.split('$').at(-1)):0
         total = total+price
+        names.push(option['radio'])
       }
       else {
         const options = item.groups[index].options
         for (let i=0;i< option['check'].length;i++){
           if(option['check'][i]){ 
             total = total + options[i].price
+            names.push(options[i].name)
           }
 
         }
       }
     })
-    return total
+    return [total,names]
   }
 
   const handleRadio= (e,index)=>{
@@ -90,8 +96,9 @@ function PopupItem(props) {
     setItemOrder(
       produce((draft)=>{
         draft.options[index]['radio']=e.target.value
-        let sub =calculate(draft.options)
+        let [sub,names] =calculate(draft.options)
         draft.optionPrice=sub
+        draft.optionNames= names
       })
     )
   }
@@ -99,15 +106,22 @@ function PopupItem(props) {
     setItemOrder(
       produce((draft)=>{
         draft.options[index]['check'][index2]= !draft.options[index]['check'][index2]
-        let sub =calculate(draft.options)
+        let [sub,names] =calculate(draft.options)
         draft.optionPrice=sub
+        draft.optionNames=names
       })
     )
     
   }
   const handleSubmit =(e) =>{
-    console.log(itemOrder)
     e.preventDefault()
+    console.log({...itemOrder, name:item.name})
+    setCart(
+      produce((draft)=>{
+      draft.push({...itemOrder, name:item.name})
+      }
+    ))
+    
   }
 
 

@@ -7,7 +7,8 @@ import './Header.css'
 
 import { Link } from "react-router-dom";
 
-function OffCanvasExample({name,...props}) {
+function OffCanvasExample(props) {
+  const {cart,setCart} = props
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -21,9 +22,9 @@ function OffCanvasExample({name,...props}) {
   return (
     <>
       <Button variant="outline-warning" onClick={handleShow} className="me-2">
-        Cart
+        Cart  ({cart.length} items)
       </Button>
-      <Offcanvas show={show} onHide={handleClose} scroll={true} {...props}>
+      <Offcanvas show={show} onHide={handleClose} scroll={true} placement='end'>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Your Order</Offcanvas.Title>
         </Offcanvas.Header>
@@ -39,7 +40,7 @@ function OffCanvasExample({name,...props}) {
 
 
 function Header(props) {
-  const {restaurant} = props 
+  const {restaurant,cart,setCart} = props 
   return (
     <>
       <Navbar sticky='top' bg="dark" variant="dark" expand='lg'>
@@ -51,7 +52,7 @@ function Header(props) {
               Menu Creator
           </Button>{' '}
           </Link>
-          <OffCanvasExample placement='end' name='end'/>
+          <OffCanvasExample cart={cart} setCart={setCart}/>
 
           </div>
         </Container>

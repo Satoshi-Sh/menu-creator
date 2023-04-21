@@ -5,7 +5,7 @@ import ItemCard from './ItemCard.js'
 
 
 const Category = props => {
-    const {menu,index} = props
+    const {menu,index,setCart} = props
 
     return (
         <div id={menu[index].category} className='category'>
@@ -14,7 +14,7 @@ const Category = props => {
             <p className='cat-desc'>{menu[index].description && menu[index].description}</p>
             {menu[index].items && menu[index].items.map((item,index2)=>(
                 <div key={index2}>
-                   <ItemCard item={item} index={index} index2={index2} menu ={menu} />
+                   <ItemCard item={item} index={index} index2={index2} menu ={menu} setCart={setCart} />
                 </div>
             ))}   
             

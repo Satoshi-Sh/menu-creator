@@ -5,13 +5,13 @@ import Sidebar from './Sidebar'
 import Menu from './Menu'
 function Live(props) {
   const {menu,image,restaurant} = props
-  const {order,setOrder} = useState({})
+  const [cart,setCart] = useState([])
   
   return (
     <>
-     <Header restaurant={restaurant} order={order}/>
+     <Header restaurant={restaurant} cart={cart} setCart={setCart}/>
      <Sidebar menu={menu}  />
-     <Menu menu={menu} image={image}/>
+     <Menu menu={menu} image={image} cart={cart} setCart={setCart}/>
      
     </>
     );

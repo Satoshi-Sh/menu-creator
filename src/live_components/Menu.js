@@ -5,7 +5,7 @@ import Category from "./Category.js"
 import ImagePart from '../components/ImagePart'
  
 const Menu = props => {
-    const {menu,image} = props
+    const {menu,image,setCart} = props
     let categories = []
     for (let i of menu){
         categories.push(i)
@@ -15,7 +15,7 @@ const Menu = props => {
             <h1 id='top' className='header'>Menu</h1>
             <ImagePart image={image} />
             {categories && categories.map((category,index)=>(
-                <Category key={index} category={category} index={index} menu={menu} />
+                <Category key={index} category={category} index={index} menu={menu} setCart={setCart} />
             ))} 
         </div>
         );

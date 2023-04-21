@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button'
 import produce from "immer"
 
 function ItemCard(props) {
-  const {item,menu,index,index2}=props 
+  const {item,menu,index,index2,setCart}=props 
   return (
     <Card className='shadow-sm card'>
       <Card.Body>
@@ -20,7 +20,7 @@ function ItemCard(props) {
         </Card.Text> 
       </Card.Body>
       <Card.Footer>
-      <PopupItem menu ={menu} item={item} index={index} index2={index2} />
+      <PopupItem menu ={menu} item={item} index={index} index2={index2} setCart={setCart}/>
       </Card.Footer> 
     </Card>
   );
