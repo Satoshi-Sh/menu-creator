@@ -55,7 +55,7 @@ function Popup(props) {
       <div className='file-form'>
       <Form onSubmit={readFile}>
       <Form.Group controlId="formFile" className="mb-3">
-        <Form.Control name='path' required type="file" accept='.json'
+        <Form.Control name='path' required type="file" accept='.json,.csv'
         onChange={(e) => setSelectedFile(e.target.files[0])}
         />
       </Form.Group>
@@ -77,14 +77,53 @@ function Popup(props) {
 
   const readFile = (e)=>{
     e.preventDefault()
+   
+    const fileName = selectedFile.name
+    
+    // Get the file extension
+
+    const [restaurant,fileExtension] = fileName.split('.');
+  
     let fileReader =new FileReader()
+    
+    
     fileReader.readAsText(selectedFile,"UTF-8")
     fileReader.onload = e => {
     const content = e.target.result;
+    if (fileExtension==='csv'){
+    const lines = content.split('\n');
+    let categories = []
+    // get all categories first
+    for (let line of (lines.slice(1))){
+    const [category,name,price,description] = line.split(',')
+     if (!categories.includes(category)){
+      categories.push(category)
+     }
+    }
+    let menu = []
+    // make object for each category
+    for (let category of categories){
+    const cat = {category,description:'',items:[]}
+    for (let line of (lines.slice(1))){
+      const [category2,name,price,description] = line.split(',')
+      const item = {name,price:parseFloat(price),description:description.replace('\r',''),groups:[]} 
+      if (category ===category2){
+        cat.items.push(item)
+       }
+      }
+      menu.push(cat)
+    }
+    setMenu(menu)
+    setRestaurant(restaurant)
+    // default image
+    setImage("https://res.cloudinary.com/dmaijlcxd/image/upload/c_fill,g_auto,h_250,w_970/b_rgb:000000,e_gradient_fade,y_-0.50/c_scale,co_rgb:ffffff,fl_relative,l_text:montserrat_25_style_light_align_center:Shop%20Now,w_0.5,y_0.18/v1670714105/cld-sample-4.jpg")
+  }
+    else{
     const data = JSON.parse(content)
     setMenu(data['menu']);
     setRestaurant(data['restaurant'])
     setImage(data['image'])
+    }
     handleClose()
   }
 }
