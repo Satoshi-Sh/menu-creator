@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/menu-creator/static/css/main.3172cc79.css",
-    "main.js": "/menu-creator/static/js/main.f2ed504b.js",
+    "main.js": "/menu-creator/static/js/main.a2bcfe17.js",
     "static/media/Liquor Vendor.csv": "/menu-creator/static/media/Liquor Vendor.1ebf17dfb571c13f89e3.csv",
     "index.html": "/menu-creator/index.html",
     "main.3172cc79.css.map": "/menu-creator/static/css/main.3172cc79.css.map",
-    "main.f2ed504b.js.map": "/menu-creator/static/js/main.f2ed504b.js.map"
+    "main.a2bcfe17.js.map": "/menu-creator/static/js/main.a2bcfe17.js.map"
   },
   "entrypoints": [
     "static/css/main.3172cc79.css",
-    "static/js/main.f2ed504b.js"
+    "static/js/main.a2bcfe17.js"
   ]
 }
