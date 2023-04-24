@@ -14,7 +14,7 @@ function App() {
   const [restaurant,setRestaurant] =useState(sushiya['restaurant'])
   const [image,setImage] = useState(sushiya['image'])
   return (
-    <Router>
+    <Router basename='menu-creator'>
       <Routes>
       <Route exact path='/' element={<Main menu={menu} setMenu={setMenu} restaurant={restaurant} setRestaurant={setRestaurant}
        image={image} setImage={setImage} />}/>
