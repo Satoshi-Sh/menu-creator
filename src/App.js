@@ -1,5 +1,6 @@
 import './App.css';
 import Main from './components/Main.js'
+// sample menu
 import sushiya from './menus/sushiya.json'
 import React, {useState} from 'react'
 import Live from './live_components/Live'
@@ -7,14 +8,11 @@ import Live from './live_components/Live'
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// sample menu 
-const loadedData = JSON.stringify(sushiya)
-const json = JSON.parse(loadedData)
 
 function App() {
-  const [menu,setMenu] = useState(json['menu'])
-  const [restaurant,setRestaurant] =useState(json['restaurant'])
-  const [image,setImage] = useState(json['image'])
+  const [menu,setMenu] = useState(sushiya['menu'])
+  const [restaurant,setRestaurant] =useState(sushiya['restaurant'])
+  const [image,setImage] = useState(sushiya['image'])
   return (
     <Router>
       <Routes>
