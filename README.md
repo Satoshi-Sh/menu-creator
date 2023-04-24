@@ -5,8 +5,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-The application is under progress.
+Open [http://localhost:3000](http://localhost:3000/menu-creator) to view it in your browser.
 
 ## Development Notes
 https://mastodon.xyz/@sato1108ss/110177725642854961
