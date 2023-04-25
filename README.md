@@ -10,6 +10,9 @@
 ### Menu Live Page 
   - Make a mock order with the current menu.
 
+## Live Page
+You can check live page [here](https://satoshi-sh.github.io/menu-creator/)
+
 ## Run this locally
 In the project directory, you can run:
 ### `npm start`
