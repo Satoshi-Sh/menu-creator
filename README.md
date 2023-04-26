@@ -23,6 +23,11 @@ Open [http://localhost:3000/menu-creator](http://localhost:3000/menu-creator) to
 - React DOM Router
 - React-Bootstrap
 
+## Outlook
+<p align='center'>
+<img src ='https://github.com/Satoshi-Sh/git_resource/blob/main/menu-creator.gif'/>
+</p>
+
 ## Development Notes
 [Mastodon toots](https://mastodon.xyz/@sato1108ss/110177725642854961)
 
