@@ -8,7 +8,7 @@ function Main(props) {
   return (
     <>
       <Header />
-      <Sidebar menu={menu} setMenu={setMenu} />
+      <Sidebar />
       <Menu menu={menu} setMenu={setMenu} image={image} />
     </>
   );
