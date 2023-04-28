@@ -91,9 +91,6 @@ function ItemCard(props) {
       </Card.Body>
       <Card.Footer>
         <PopupItem
-          menu={menu}
-          item={item}
-          setMenu={setMenu}
           index={index}
           index2={index2}
           show={show}

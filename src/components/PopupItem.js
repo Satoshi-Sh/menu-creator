@@ -1,41 +1,52 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import produce from "immer"
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
-
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { updateIt, deleteIt } from "../redux/menuSlice";
 
 function PopupItem(props) {
-  const {index,index2,menu,setMenu} = props 
+  const dispatch = useDispatch();
+  const menu = useSelector((state) => {
+    return state.menu.menu;
+  });
+
+  const { index, index2 } = props;
   const [show, setShow] = useState(false);
-  
-  
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleDelete = () => {
-    setMenu(
-      produce((draft)=>{
-        draft[index].items.splice(index2,1)
+    dispatch(
+      deleteIt({
+        index,
+        index2,
       })
-    )
-    handleClose()
-  }
+    );
+    handleClose();
+  };
 
-  const handleSubmit =(e) =>{
-    // update menu 
-    setMenu(
-      produce((draft)=>{
-      draft[index].items[index2].name= e.target.elements.name.value
-      draft[index].items[index2].description = e.target.elements.description.value
-      draft[index].items[index2].price = Number(e.target.elements.price.value)
+  const handleSubmit = (e) => {
+    // update menu
+    const name = e.target.elements.name.value;
+    const description = e.target.elements.description.value;
+    const price = Number(e.target.elements.price.value);
+    dispatch(
+      updateIt({
+        index,
+        index2,
+        name,
+        description,
+        price,
       })
-    )
+    );
 
-    e.preventDefault()
-    handleClose()
-  }
+    e.preventDefault();
+    handleClose();
+  };
 
   return (
     <>
@@ -53,7 +64,7 @@ function PopupItem(props) {
               <Form.Label>Item</Form.Label>
               <Form.Control
                 type="text"
-                name='name'
+                name="name"
                 defaultValue={menu[index].items[index2].name}
                 autoFocus
                 required
@@ -64,7 +75,11 @@ function PopupItem(props) {
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Description</Form.Label>
-              <Form.Control name='description' as="textarea" rows={4} defaultValue={menu[index].items[index2].description}
+              <Form.Control
+                name="description"
+                as="textarea"
+                rows={4}
+                defaultValue={menu[index].items[index2].description}
               />
             </Form.Group>
             <Form.Group
@@ -72,26 +87,30 @@ function PopupItem(props) {
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Price $</Form.Label>
-              <Form.Control type='number' step='0.1' name='price' defaultValue={menu[index].items[index2].price}
-              required/>
-              
+              <Form.Control
+                type="number"
+                step="0.1"
+                name="price"
+                defaultValue={menu[index].items[index2].price}
+                required
+              />
             </Form.Group>
-            <Button className='m-1' variant="secondary" onClick={handleClose}>
-            Close
+            <Button className="m-1" variant="secondary" onClick={handleClose}>
+              Close
             </Button>
-            <Button  className='m-1' variant="primary" type='submit'>
-               Save Changes
+            <Button className="m-1" variant="primary" type="submit">
+              Save Changes
             </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="danger" onClick={handleDelete}>
-               Delete the Item
-        </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete the Item
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 }
 
-export default PopupItem
+export default PopupItem;
