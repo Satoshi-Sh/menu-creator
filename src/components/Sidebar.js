@@ -21,9 +21,6 @@ const Sidebar = () => {
   for (let i of menu) {
     categories.push(i.category);
   }
-  const setMenu = () => {
-    console.log("Hello for now");
-  };
 
   const [show, setShow] = useState(false);
   function handleClick(e) {

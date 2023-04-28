@@ -20,9 +20,24 @@ export const menuSlice = createSlice({
       state.menu[index2] = dragged;
       state.menu[index1] = over;
     },
+    addNewIt: (state, action) => {
+      const newItem = { name: "New Item", description: "", price: 0 };
+      const index = action.payload.index;
+      state.menu[index].items.push(newItem);
+    },
+    switchIt: (state, action) => {
+      const { index1, index2, index } = action.payload;
+      const [dragged, over] = [
+        state.menu[index].items[index1],
+        state.menu[index].items[index2],
+      ];
+      state.menu[index].items[index1] = over;
+      state.menu[index].items[index2] = dragged;
+    },
   },
 });
 
-export const { startOver, addNewCat, switchCat } = menuSlice.actions;
+export const { startOver, addNewCat, switchCat, addNewIt, switchIt } =
+  menuSlice.actions;
 
 export default menuSlice.reducer;

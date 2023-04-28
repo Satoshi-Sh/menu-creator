@@ -3,8 +3,17 @@ import React from "react";
 import Category from "./Category.js";
 import ImagePart from "./ImagePart";
 
-const Menu = (props) => {
-  const { menu, setMenu, image } = props;
+//redux
+import { useSelector } from "react-redux";
+
+const Menu = () => {
+  const data = useSelector((state) => {
+    return state.menu;
+  });
+  const [menu, image] = [data.menu, data.image];
+  const setMenu = () => {
+    console.log("Hello for now");
+  };
   let categories = [];
   for (let i of menu) {
     categories.push(i);
