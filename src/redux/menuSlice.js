@@ -75,6 +75,41 @@ export const menuSlice = createSlice({
       groups[startidx] = over;
       groups[endidx] = dragged;
     },
+    deleteGr: (state, action) => {
+      const { index, index2, index3 } = action.payload;
+      state.menu[index].items[index2].groups.splice(index3, 1);
+    },
+    deleteOp: (state, action) => {
+      const { index, index2, index3, index4 } = action.payload;
+      state.menu[index].items[index2].groups[index3].options.splice(index4, 1);
+    },
+    addOp: (state, action) => {
+      const newOption = { name: "New Option", price: 0 };
+      const { index, index2, index3 } = action.payload;
+      const options = state.menu[index].items[index2].groups[index3].options;
+      options.push(newOption);
+    },
+    updateOp: (state, action) => {
+      const { index, index2, index3, newData } = action.payload;
+      const groups = state.menu[index].items[index2].groups;
+      groups[index3] = newData;
+    },
+    switchOp: (state, action) => {
+      const { startIdx, endIdx, index, index2, index3 } = action.payload;
+      const options = state.menu[index].items[index2].groups[index3].options;
+      const [start, end] = [options[startIdx], options[endIdx]];
+      options[startIdx] = end;
+      options[endIdx] = start;
+    },
+    saveBlur: (state, action) => {
+      const { index, index2, index3, i, n, newValue } = action.payload;
+      const option = state.menu[index].items[index2].groups[index3].options[i];
+      if (n == "optionName") {
+        option["name"] = newValue;
+      } else {
+        option["price"] = parseFloat(newValue);
+      }
+    },
   },
 });
 
@@ -90,6 +125,12 @@ export const {
   switchGr,
   updateIt,
   deleteIt,
+  deleteOp,
+  deleteGr,
+  addOp,
+  switchOp,
+  saveBlur,
+  updateOp,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;
