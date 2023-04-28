@@ -13,7 +13,7 @@ const Category = (props) => {
   const menu = useSelector((state) => {
     return state.menu.menu;
   });
-  const { setMenu, index } = props;
+  const { index } = props;
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
@@ -62,13 +62,7 @@ const Category = (props) => {
             onDragEnd={drop}
             draggable
           >
-            <ItemCard
-              item={item}
-              index={index}
-              index2={index2}
-              menu={menu}
-              setMenu={setMenu}
-            />
+            <ItemCard index={index} index2={index2} />
           </div>
         ))}
 

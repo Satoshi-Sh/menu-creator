@@ -9,7 +9,7 @@ function Main(props) {
     <>
       <Header />
       <Sidebar />
-      <Menu menu={menu} setMenu={setMenu} image={image} />
+      <Menu />
     </>
   );
 }

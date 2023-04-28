@@ -14,7 +14,7 @@ function ItemCard(props) {
   const menu = useSelector((state) => {
     return state.menu.menu;
   });
-  const { setMenu, index, index2 } = props;
+  const { index, index2 } = props;
   const item = menu[index].items[index2];
 
   const [show, setShow] = useState(false);
@@ -78,8 +78,6 @@ function ItemCard(props) {
                 onDragEnd={drop}
               >
                 <PopupOption
-                  menu={menu}
-                  setMenu={setMenu}
                   index={index}
                   index2={index2}
                   index3={i}

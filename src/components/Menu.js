@@ -26,14 +26,7 @@ const Menu = () => {
       <ImagePart image={image} />
       {categories &&
         categories.map((category, index) => (
-          <Category
-            image={image}
-            key={index}
-            category={category}
-            index={index}
-            menu={menu}
-            setMenu={setMenu}
-          />
+          <Category key={index} category={category} index={index} />
         ))}
     </div>
   );
