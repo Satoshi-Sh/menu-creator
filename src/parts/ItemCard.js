@@ -1,79 +1,104 @@
-import Card from 'react-bootstrap/Card';
-import './ItemCard.css'
-import PopupItem from '../components/PopupItem'
-import React,{useState,useRef} from 'react'
-import PopupOption from '../components/PopupOption'
-import Button from 'react-bootstrap/Button'
-import produce from "immer"
+import Card from "react-bootstrap/Card";
+import "./ItemCard.css";
+import PopupItem from "../components/PopupItem";
+import React, { useState, useRef } from "react";
+import PopupOption from "../components/PopupOption";
+import Button from "react-bootstrap/Button";
+import produce from "immer";
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import { addNewGr, switchGr } from "../redux/menuSlice";
 
 function ItemCard(props) {
-  const {item,menu,setMenu,index,index2}=props 
-  const [show,setShow] = useState(false)
+  const menu = useSelector((state) => {
+    return state.menu.menu;
+  });
+  const { setMenu, index, index2 } = props;
+  const item = menu[index].items[index2];
+
+  const [show, setShow] = useState(false);
   const dragItem = useRef();
   const dragOverItem = useRef();
 
+  const dispatch = useDispatch();
 
   const drop = (e) => {
     e.stopPropagation();
-        const [startIdx,endIdx] = [dragItem.current,dragOverItem.current]
-        setMenu(
-          produce((draft)=>{
-            const arr = draft[index].items[index2].groups
-            const [start,end] = [arr[startIdx],arr[endIdx]]
-            arr[endIdx]=start
-            arr[startIdx] = end
-          })
-        )
+    const [startidx, endidx] = [dragItem.current, dragOverItem.current];
+    dispatch(
+      switchGr({
+        startidx,
+        endidx,
+        index,
+        index2,
+      })
+    );
   };
 
-  
   const dragStart = (e, position) => {
-    e.stopPropagation()
+    e.stopPropagation();
     dragItem.current = position;
   };
- 
+
   const dragEnter = (e, position) => {
-    e.stopPropagation()
+    e.stopPropagation();
     dragOverItem.current = position;
   };
 
+  const handleAdd = () => {
+    dispatch(
+      addNewGr({
+        index,
+        index2,
+      })
+    );
+  };
 
-  const handleAdd = ()=>{
-    const newGroup = {"required":true,"name":"New Group","options":[{"name":"New Option","price":0}]}
-    setMenu(produce((draft)=>{
-    let item_ = draft[index].items[index2] 
-    if ('groups' in item_){
-    item_.groups.push(newGroup)
-    }
-    else {
-      item_['groups'] = [newGroup]
-    }
-  }))
-  }  
-  
   return (
-    <Card className='shadow-sm card'>
+    <Card className="shadow-sm card">
       <Card.Body>
         <Card.Title>{item.name}</Card.Title>
-        <Card.Text className='text-muted p-2'>
-            {item.description}
-        </Card.Text>
-        <Card.Text className='p-2 price'>
-            $ {item.price.toFixed(2)}
-        </Card.Text> 
+        <Card.Text className="text-muted p-2">{item.description}</Card.Text>
+        <Card.Text className="p-2 price">$ {item.price.toFixed(2)}</Card.Text>
         <Card.Text>
-          Option Groups <Button variant='outline-info' onClick={handleAdd}>+ Add</Button>
+          Option Groups{" "}
+          <Button variant="outline-info" onClick={handleAdd}>
+            + Add
+          </Button>
         </Card.Text>
-        <div className='option-groups'>{item.groups && item.groups.map((group,i)=>
-          <div key={i} 
-          draggable
-          onDragStart={(e) => dragStart(e, i)}
-          onDragEnter={(e) => dragEnter(e, i)}
-          onDragEnd={drop}          
-          ><PopupOption menu={menu} setMenu={setMenu} index={index} index2={index2} index3= {i} group={group}/></div>)}</div>
+        <div className="option-groups">
+          {item.groups &&
+            item.groups.map((group, i) => (
+              <div
+                key={i}
+                draggable
+                onDragStart={(e) => dragStart(e, i)}
+                onDragEnter={(e) => dragEnter(e, i)}
+                onDragEnd={drop}
+              >
+                <PopupOption
+                  menu={menu}
+                  setMenu={setMenu}
+                  index={index}
+                  index2={index2}
+                  index3={i}
+                  group={group}
+                />
+              </div>
+            ))}
+        </div>
       </Card.Body>
       <Card.Footer>
-      <PopupItem menu ={menu} item={item} setMenu={setMenu} index={index} index2={index2} show={show} setShow={setShow}/>
+        <PopupItem
+          menu={menu}
+          item={item}
+          setMenu={setMenu}
+          index={index}
+          index2={index2}
+          show={show}
+          setShow={setShow}
+        />
       </Card.Footer>
     </Card>
   );

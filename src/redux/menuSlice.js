@@ -43,6 +43,27 @@ export const menuSlice = createSlice({
       state.menu[index].items[index1] = over;
       state.menu[index].items[index2] = dragged;
     },
+    addNewGr: (state, action) => {
+      const newGroup = {
+        required: true,
+        name: "New Group",
+        options: [{ name: "New Option", price: 0 }],
+      };
+      const { index, index2 } = action.payload;
+      const item = state.menu[index].items[index2];
+      if ("groups" in item) {
+        item.groups.push(newGroup);
+      } else {
+        item["groups"] = [newGroup];
+      }
+    },
+    switchGr: (state, action) => {
+      const { startidx, endidx, index, index2 } = action.payload;
+      const groups = state.menu[index].items[index2].groups;
+      const [dragged, over] = [groups[startidx], groups[endidx]];
+      groups[startidx] = over;
+      groups[endidx] = dragged;
+    },
   },
 });
 
@@ -54,6 +75,8 @@ export const {
   switchIt,
   deleteCat,
   updateCat,
+  addNewGr,
+  switchGr,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

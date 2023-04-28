@@ -52,13 +52,7 @@ const Category = (props) => {
       <p className="cat-desc">
         {menu[index].description && menu[index].description}
       </p>
-      <PopupCat
-        menu={menu}
-        setMenu={setMenu}
-        index={index}
-        show={show}
-        setShow={setShow}
-      />
+      <PopupCat index={index} show={show} setShow={setShow} />
       {menu[index].items &&
         menu[index].items.map((item, index2) => (
           <div
