@@ -6,10 +6,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 function ItemCard(props) {
-  const menu = useSelector((state) => {
-    return state.menu.menu;
-  });
-  const { item, setCart } = props;
+  const { item } = props;
   return (
     <Card className="shadow-sm card">
       <Card.Body>
@@ -18,7 +15,7 @@ function ItemCard(props) {
         <Card.Text className="p-2 price">$ {item.price.toFixed(2)}</Card.Text>
       </Card.Body>
       <Card.Footer>
-        <PopupItem item={item} setCart={setCart} />
+        <PopupItem item={item} />
       </Card.Footer>
     </Card>
   );

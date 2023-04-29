@@ -11,9 +11,6 @@ const Menu = () => {
     return state.menu;
   });
   const [menu, image] = [data.menu, data.image];
-  const setMenu = () => {
-    console.log("Hello for now");
-  };
   let categories = [];
   for (let i of menu) {
     categories.push(i);

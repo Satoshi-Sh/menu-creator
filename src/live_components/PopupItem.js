@@ -4,10 +4,13 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import produce from "immer";
 import "./PopupItem.css";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../redux/cartSlice";
 
 function PopupItem(props) {
-  const { item, setCart } = props;
+  const { item } = props;
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setItemOrder(empty);
     setShow(false);
@@ -111,11 +114,13 @@ function PopupItem(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (itemOrder.quantities == 0) return;
-    setCart(
-      produce((draft) => {
-        draft.push({ ...itemOrder, name: item.name });
-      })
-    );
+    // setCart(
+    //   produce((draft) => {
+    //     draft.push({ ...itemOrder, name: item.name });
+    //   })
+    // );
+    const name = item.name;
+    dispatch(addItem({ itemOrder, name }));
     setShow(false);
   };
 

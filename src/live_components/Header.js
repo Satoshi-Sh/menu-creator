@@ -4,15 +4,18 @@ import Navbar from "react-bootstrap/Navbar";
 import React, { useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "./Header.css";
-import produce from "immer";
 
 import { Link } from "react-router-dom";
 
 //redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { emptyCart, incrementItem, decrementItem } from "../redux/cartSlice";
 
-function OffCanvasExample(props) {
-  const { cart, setCart } = props;
+function OffCanvasExample() {
+  const cart = useSelector((state) => {
+    return state.cart;
+  });
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   let total = 0;
@@ -21,26 +24,14 @@ function OffCanvasExample(props) {
   });
 
   const complete = () => {
-    setCart([]);
+    dispatch(emptyCart());
     setShow(false);
   };
   const increment = (e, index) => {
-    setCart(
-      produce((draft) => {
-        draft[index]["quantities"] = draft[index]["quantities"] + 1;
-      })
-    );
+    dispatch(incrementItem({ index }));
   };
   const decrement = (e, index) => {
-    setCart(
-      produce((draft) => {
-        if (draft[index]["quantities"] === 1) {
-          draft.splice(index, 1);
-        } else {
-          draft[index]["quantities"] = draft[index]["quantities"] - 1;
-        }
-      })
-    );
+    dispatch(decrementItem({ index }));
   };
 
   const handleClose = () => {

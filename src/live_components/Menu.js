@@ -13,7 +13,6 @@ const Menu = (props) => {
   });
 
   const [menu, image] = [data.menu, data.image];
-  const { setCart } = props;
   let categories = [];
   for (let i of menu) {
     categories.push(i);
@@ -26,13 +25,7 @@ const Menu = (props) => {
       <ImagePart image={image} />
       {categories &&
         categories.map((category, index) => (
-          <Category
-            key={index}
-            category={category}
-            index={index}
-            menu={menu}
-            setCart={setCart}
-          />
+          <Category key={index} index={index} />
         ))}
     </div>
   );

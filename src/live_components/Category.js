@@ -8,7 +8,7 @@ const Category = (props) => {
   const menu = useSelector((state) => {
     return state.menu.menu;
   });
-  const { index, setCart } = props;
+  const { index } = props;
 
   return (
     <div id={menu[index].category} className="category">
@@ -19,7 +19,7 @@ const Category = (props) => {
       {menu[index].items &&
         menu[index].items.map((item, index2) => (
           <div key={index2}>
-            <ItemCard item={item} setCart={setCart} />
+            <ItemCard item={item} />
           </div>
         ))}
     </div>
