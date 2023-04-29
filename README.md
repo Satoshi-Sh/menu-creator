@@ -22,7 +22,7 @@ Open [http://localhost:3000/menu-creator](http://localhost:3000/menu-creator) to
 - React
 - React DOM Router
 - React-Bootstrap
-- Redux-Toolkit (in with-redux branch)
+- Redux-Toolkit (in with_redux branch)
 
 ## Outlook
 <p align='center'>
